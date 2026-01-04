@@ -69,10 +69,24 @@ export async function POST(req) {
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
       line_items: lineItems,
+      customer_creation: 'always',
       billing_address_collection: 'required',
       shipping_address_collection: {
         allowed_countries: ['SE']
       },
+      shipping_options: [
+        {
+          shipping_rate_data: {
+            type: 'fixed_amount',
+            fixed_amount: { amount: 0, currency: 'sek' },
+            display_name: 'Fri frakt',
+            delivery_estimate: {
+              minimum: { unit: 'business_day', value: 2 },
+              maximum: { unit: 'business_day', value: 5 }
+            }
+          }
+        }
+      ],
       phone_number_collection: {
         enabled: true
       },
