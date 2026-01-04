@@ -86,24 +86,6 @@ export const products = [
         price: 65000
       }
     ]
-  },
-  {
-    id: 'produkt-test',
-    name: 'Produkt Test',
-    tagline: 'Testköp',
-    description: 'Testprodukt för att verifiera Stripe Checkout.',
-    story: 'Används enbart för test av kassa och betalning.',
-    image: '/images/Viktned-1.jpg',
-    images: ['/images/Viktned-1.jpg'],
-    highlights: ['10 kr', 'Testköp', 'Snabbt flöde'],
-    variants: [
-      {
-        id: 'standard',
-        label: 'Standard',
-        duration: 'Test',
-        price: 1000
-      }
-    ]
   }
 ];
 
