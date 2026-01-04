@@ -16,6 +16,11 @@ export async function POST(req) {
       return NextResponse.json({ error: 'Varukorgen är tom.' }, { status: 400 });
     }
 
+    const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000').replace(
+      /\/$/,
+      ''
+    );
+
     const lineItems = items
       .map((item) => {
         const product = productsById[item.id];
@@ -26,13 +31,17 @@ export async function POST(req) {
           return null;
         }
 
+        const imageUrl = product.image.startsWith('http')
+          ? product.image
+          : `${baseUrl}${product.image}`;
+
         return {
           price_data: {
             currency: 'sek',
             product_data: {
               name: `${product.name} ${variant.label}`,
               description: `${product.description} (${variant.duration})`,
-              images: [product.image],
+              images: [imageUrl],
               metadata: { productId: product.id, variantId: variant.id }
             },
             unit_amount: variant.price
@@ -45,8 +54,6 @@ export async function POST(req) {
     if (lineItems.length === 0) {
       return NextResponse.json({ error: 'Inga giltiga produkter hittades.' }, { status: 400 });
     }
-
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
 
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',

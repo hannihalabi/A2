@@ -53,12 +53,12 @@ export const products = [
     id: 'nassprej',
     name: 'Nässprej',
     tagline: 'Pigmentstöd',
-    description: 'Nässprej för att få bättre pigment, enkel att använda.',
+    description: 'Nässprej 30 mg för att få bättre pigment, enkel att använda.',
     story:
-      'Formulerad för daglig användning med fokus på jämn applicering och enkel rutin.',
+      'Formulerad för daglig användning med fokus på jämn applicering och enkel rutin. 30 mg per flaska.',
     image: '/nasspray/2291124447_0340_0340.jpg',
     images: ['/nasspray/2291124447_0340_0340.jpg'],
-    highlights: ['Jämn applicering', 'Smidig rutin', 'Pigmentstöd'],
+    highlights: ['30 mg', 'Smidig rutin', 'Pigmentstöd'],
     variants: [
       {
         id: '30mg',
@@ -72,16 +72,16 @@ export const products = [
     id: 'melanotan-2',
     name: 'Melanotan 2',
     tagline: 'Komplett kit',
-    description: '10 mg. Ingår vatten & insulinnålar.',
+    description: '30 mg. Ingår vatten & insulinnålar.',
     story:
-      'Ett komplett startkit med 10 mg, sterilt vatten och insulinnålar för enkel förberedelse.',
+      'Ett komplett startkit med 30 mg, sterilt vatten och insulinnålar för enkel förberedelse.',
     image: '/melanotan/Melanotan-1-10MG-600x600.jpg.webp',
     images: ['/melanotan/Melanotan-1-10MG-600x600.jpg.webp'],
-    highlights: ['10 mg', 'Vatten ingår', 'Insulinnålar ingår'],
+    highlights: ['30 mg', 'Vatten ingår', 'Insulinnålar ingår'],
     variants: [
       {
-        id: '10mg',
-        label: '10 mg',
+        id: '30mg',
+        label: '30 mg',
         duration: 'Komplett kit',
         price: 65000
       }
