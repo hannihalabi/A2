@@ -6,8 +6,8 @@ export const products = [
     description: 'Flexibel behandling för viktnedgång med två styrkor och olika längd.',
     story:
       'Välj 10 mg för 1 månad eller 20 mg för 2 månader. Diskret leverans och tydlig dosering.',
-    image: '/tirzepetide/Triza-1.avif',
-    images: ['/tirzepetide/Triza-1.avif', '/tirzepetide/Triza-2.avif'],
+    image: '/tirzepetide/tirze-1.png',
+    images: ['/tirzepetide/tirze-1.png'],
     highlights: ['Två styrkor', 'Tydlig dosering', 'Diskret leverans'],
     variants: [
       {
@@ -72,16 +72,16 @@ export const products = [
     id: 'melanotan-2',
     name: 'Melanotan 2',
     tagline: 'Komplett kit',
-    description: '30 mg. Ingår vatten & insulinnålar.',
+    description: '10 mg. Ingår vatten & insulinnålar.',
     story:
-      'Ett komplett startkit med 30 mg, sterilt vatten och insulinnålar för enkel förberedelse.',
+      'Ett komplett startkit med 10 mg, sterilt vatten och insulinnålar för enkel förberedelse.',
     image: '/melanotan/Melanotan-1-10MG-600x600.jpg.webp',
     images: ['/melanotan/Melanotan-1-10MG-600x600.jpg.webp'],
-    highlights: ['30 mg', 'Vatten ingår', 'Insulinnålar ingår'],
+    highlights: ['10 mg', 'Vatten ingår', 'Insulinnålar ingår'],
     variants: [
       {
-        id: '30mg',
-        label: '30 mg',
+        id: '10mg',
+        label: '10 mg',
         duration: 'Komplett kit',
         price: 65000
       }
