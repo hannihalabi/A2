@@ -16,12 +16,12 @@ export default function SuccessPage() {
     <div className="page">
       <SiteHeader />
       <main className="content status-page">
-        <h1>Payment complete</h1>
+        <h1>Betalningen lyckades</h1>
         <p className="hero-copy">
-          Thanks for your order. A confirmation email is on the way with tracking details.
+          Tack för din beställning. En bekräftelse skickas med leveransinformation.
         </p>
         <Link className="button button-primary" href="/">
-          Return to the collection
+          Tillbaka till sortimentet
         </Link>
       </main>
     </div>

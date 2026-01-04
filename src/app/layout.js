@@ -15,8 +15,8 @@ const displayFont = Fraunces({
 });
 
 export const metadata = {
-  title: 'Sable & Stone',
-  description: 'A four-piece interior edit with seamless Stripe checkout.'
+  title: 'A2 Shop',
+  description: 'Fyra produkter med Stripe Checkout.'
 };
 
 export default function RootLayout({ children }) {

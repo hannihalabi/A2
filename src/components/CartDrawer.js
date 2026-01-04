@@ -20,7 +20,10 @@ export default function CartDrawer({ open, onClose }) {
   const [error, setError] = useState('');
 
   const empty = lineItems.length === 0;
-  const estimatedTaxLabel = useMemo(() => (empty ? '$0.00' : formatPrice(tax)), [tax, empty]);
+  const estimatedTaxLabel = useMemo(
+    () => (empty ? formatPrice(0) : formatPrice(tax)),
+    [tax, empty]
+  );
 
   useEffect(() => {
     if (open) {
@@ -42,13 +45,17 @@ export default function CartDrawer({ open, onClose }) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          items: lineItems.map((item) => ({ id: item.id, quantity: item.quantity }))
+          items: lineItems.map((item) => ({
+            id: item.id,
+            variantId: item.variant.id,
+            quantity: item.quantity
+          }))
         })
       });
 
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data?.error || 'Checkout failed.');
+        throw new Error(data?.error || 'Kassan kunde inte starta.');
       }
 
       const data = await response.json();
@@ -56,9 +63,9 @@ export default function CartDrawer({ open, onClose }) {
         window.location.href = data.url;
         return;
       }
-      throw new Error('Checkout session missing.');
+      throw new Error('Kassan saknar session.');
     } catch (err) {
-      setError(err.message || 'Checkout failed.');
+      setError(err.message || 'Kassan kunde inte starta.');
       setIsLoading(false);
     }
   }
@@ -69,19 +76,21 @@ export default function CartDrawer({ open, onClose }) {
       <aside className="cart-panel" role="dialog" aria-label="Shopping cart">
         <div className="cart-header">
           <div>
-            <p className="cart-title">Your cart</p>
-            <p className="cart-subtitle">{itemCount} item{itemCount === 1 ? '' : 's'}</p>
+            <p className="cart-title">Din varukorg</p>
+            <p className="cart-subtitle">
+              {itemCount} produkt{itemCount === 1 ? '' : 'er'}
+            </p>
           </div>
           <button className="button button-ghost" onClick={onClose}>
-            Close
+            Stäng
           </button>
         </div>
 
         <div className="cart-items">
           {empty ? (
             <div className="cart-empty">
-              <p>Nothing here yet.</p>
-              <p className="muted">Pick from the four-piece edit to get started.</p>
+              <p>Varukorgen är tom.</p>
+              <p className="muted">Välj en produkt för att komma igång.</p>
             </div>
           ) : (
             lineItems.map((item) => (
@@ -92,27 +101,34 @@ export default function CartDrawer({ open, onClose }) {
                 <div className="cart-item-info">
                   <div>
                     <p className="cart-item-name">{item.name}</p>
-                    <p className="muted">{formatPrice(item.price)}</p>
+                    <p className="muted">
+                      {item.variant.label} - {item.variant.duration}
+                    </p>
+                    <p className="muted">{formatPrice(item.variant.price)}</p>
                   </div>
                   <div className="qty-controls">
                     <button
                       className="button button-ghost"
-                      onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                      onClick={() =>
+                        updateQuantity(item.id, item.variant.id, item.quantity - 1)
+                      }
                     >
                       -
                     </button>
                     <span>{item.quantity}</span>
                     <button
                       className="button button-ghost"
-                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                      onClick={() =>
+                        updateQuantity(item.id, item.variant.id, item.quantity + 1)
+                      }
                     >
                       +
                     </button>
                     <button
                       className="button button-link"
-                      onClick={() => removeItem(item.id)}
+                      onClick={() => removeItem(item.id, item.variant.id)}
                     >
-                      Remove
+                      Ta bort
                     </button>
                   </div>
                 </div>
@@ -124,13 +140,13 @@ export default function CartDrawer({ open, onClose }) {
         <div className="cart-footer">
           <div className="totals">
             <div className="totals-row">
-              <span>Subtotal</span>
+              <span>Delsumma</span>
               <span>{formatPrice(subtotal)}</span>
             </div>
-            <div className="totals-row">
-              <span>Estimated tax</span>
-              <span>{estimatedTaxLabel}</span>
-            </div>
+          <div className="totals-row">
+            <span>Moms (estimerad)</span>
+            <span>{estimatedTaxLabel}</span>
+          </div>
             <div className="totals-row totals-total">
               <span>Total</span>
               <span>{formatPrice(total)}</span>
@@ -142,9 +158,9 @@ export default function CartDrawer({ open, onClose }) {
             onClick={handleCheckout}
             disabled={empty || isLoading}
           >
-            {isLoading ? 'Redirecting...' : 'Checkout with Stripe'}
+            {isLoading ? 'Tar dig vidare...' : 'Till Stripe Checkout'}
           </button>
-          <p className="muted footnote">Tax finalizes at Stripe checkout.</p>
+          <p className="muted footnote">Slutlig moms räknas i Stripe Checkout.</p>
         </div>
       </aside>
     </div>

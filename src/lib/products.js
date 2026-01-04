@@ -1,51 +1,91 @@
 export const products = [
   {
-    id: 'lumen-lamp',
-    name: 'Lumen Desk Lamp',
-    tagline: 'Soft-focus brass',
-    description: 'Brushed brass lighting with a warm amber glow and dimmable touch control.',
+    id: 'trizapetide',
+    name: 'Trizapetide',
+    tagline: 'Välj styrka',
+    description: 'Flexibel behandling för viktnedgång med två styrkor och olika längd.',
     story:
-      'A compact lamp built for late-night focus sessions, tuned to soften glare without dulling detail.',
-    price: 12900,
-    image:
-      'https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1000&q=80',
-    highlights: ['Brushed brass body', 'Touch dimmer', 'Warm amber diffuser']
+      'Välj 10 mg för 1 månad eller 20 mg för 2 månader. Diskret leverans och tydlig dosering.',
+    image: '/tirzepetide/Triza-1.avif',
+    images: ['/tirzepetide/Triza-1.avif', '/tirzepetide/Triza-2.avif'],
+    highlights: ['Två styrkor', 'Tydlig dosering', 'Diskret leverans'],
+    variants: [
+      {
+        id: '10mg',
+        label: '10 mg',
+        duration: '1 månad',
+        price: 300000
+      },
+      {
+        id: '20mg',
+        label: '20 mg',
+        duration: '2 månader',
+        price: 450000
+      }
+    ]
   },
   {
-    id: 'solace-chair',
-    name: 'Solace Lounge Chair',
-    tagline: 'Quiet structure',
-    description: 'A low-slung reading chair with sculpted walnut arms and linen upholstery.',
+    id: 'retatrutide',
+    name: 'Retatrutide',
+    tagline: 'Välj styrka',
+    description: 'Långsiktig kur med två styrkor och differentierad längd.',
     story:
-      'Designed to anchor slow mornings, the Solace chair pairs a firm frame with soft textured cushions.',
-    price: 48900,
-    image:
-      'https://images.unsplash.com/photo-1505693314120-0d443867891c?auto=format&fit=crop&w=1000&q=80',
-    highlights: ['Solid walnut arms', 'Linen upholstery', 'Low lounge profile']
+      'Välj 10 mg för 1 månad eller 20 mg för 2 månader. Levereras med tydliga instruktioner.',
+    image: '/retatrutide/reta-2.webp',
+    images: ['/retatrutide/reta-2.webp'],
+    highlights: ['Två styrkor', 'Långsiktig plan', 'Instruktioner medföljer'],
+    variants: [
+      {
+        id: '10mg',
+        label: '10 mg',
+        duration: '1 månad',
+        price: 350000
+      },
+      {
+        id: '20mg',
+        label: '20 mg',
+        duration: '2 månader',
+        price: 550000
+      }
+    ]
   },
   {
-    id: 'ember-mug',
-    name: 'Ember Stoneware Set',
-    tagline: 'Hand-thrown warmth',
-    description: 'Four matte stoneware mugs with reactive glaze and a speckled finish.',
+    id: 'nassprej',
+    name: 'Nässprej',
+    tagline: 'Pigmentstöd',
+    description: 'Nässprej för att få bättre pigment, enkel att använda.',
     story:
-      'Thrown in small batches, each mug carries a unique glaze pattern that deepens with use.',
-    price: 6800,
-    image:
-      'https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=1000&q=80',
-    highlights: ['Set of four', 'Reactive glaze', 'Dishwasher safe']
+      'Formulerad för daglig användning med fokus på jämn applicering och enkel rutin.',
+    image: '/nasspray/2291124447_0340_0340.jpg',
+    images: ['/nasspray/2291124447_0340_0340.jpg'],
+    highlights: ['Jämn applicering', 'Smidig rutin', 'Pigmentstöd'],
+    variants: [
+      {
+        id: '30mg',
+        label: '30 mg',
+        duration: '1 flaska',
+        price: 80000
+      }
+    ]
   },
   {
-    id: 'aura-throw',
-    name: 'Aura Wool Throw',
-    tagline: 'Layered comfort',
-    description: 'A heavyweight merino throw with a tonal gradient and hand-knotted fringe.',
+    id: 'melanotan-2',
+    name: 'Melanotan 2',
+    tagline: 'Komplett kit',
+    description: '10 mg. Ingår vatten & insulinnålar.',
     story:
-      'Soft, weighty, and woven for layering, the Aura throw anchors a room with subtle color shifts.',
-    price: 15400,
-    image:
-      'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1000&q=80',
-    highlights: ['Merino wool', 'Hand-knotted fringe', 'Tonal gradient weave']
+      'Ett komplett startkit med 10 mg, sterilt vatten och insulinnålar för enkel förberedelse.',
+    image: '/melanotan/Melanotan-1-10MG-600x600.jpg.webp',
+    images: ['/melanotan/Melanotan-1-10MG-600x600.jpg.webp'],
+    highlights: ['10 mg', 'Vatten ingår', 'Insulinnålar ingår'],
+    variants: [
+      {
+        id: '10mg',
+        label: '10 mg',
+        duration: 'Komplett kit',
+        price: 65000
+      }
+    ]
   }
 ];
 
@@ -53,3 +93,10 @@ export const productsById = products.reduce((acc, product) => {
   acc[product.id] = product;
   return acc;
 }, {});
+
+export function getProductVariant(productId, variantId) {
+  const product = productsById[productId];
+  if (!product?.variants?.length) return null;
+  if (!variantId) return product.variants[0];
+  return product.variants.find((variant) => variant.id === variantId) || product.variants[0];
+}

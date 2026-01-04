@@ -6,12 +6,12 @@ export default function CancelPage() {
     <div className="page">
       <SiteHeader />
       <main className="content status-page">
-        <h1>Checkout canceled</h1>
+        <h1>Köpet avbröts</h1>
         <p className="hero-copy">
-          No charges were made. Your cart is still saved when you are ready.
+          Ingen betalning genomfördes. Din varukorg finns kvar när du är redo.
         </p>
         <Link className="button button-primary" href="/">
-          Return to cart
+          Tillbaka till varukorgen
         </Link>
       </main>
     </div>

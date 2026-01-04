@@ -1,24 +1,37 @@
 'use client';
 
 import { createContext, useContext, useEffect, useMemo, useReducer, useState } from 'react';
-import { productsById } from '@/lib/products';
+import { getProductVariant, productsById } from '@/lib/products';
 
 const CartContext = createContext(null);
 const STORAGE_KEY = 'a2-cart';
-const TAX_RATE = 0.08;
+const TAX_RATE = 0.25;
 
 function cartReducer(state, action) {
   switch (action.type) {
     case 'INIT': {
-      return { ...state, items: action.items };
+      const normalized =
+        Array.isArray(action.items) && action.items.length
+          ? action.items
+              .map((item) => {
+                const variant = getProductVariant(item.id, item.variantId);
+                const quantity = Number(item.quantity) || 0;
+                if (!variant || quantity <= 0) return null;
+                return { id: item.id, variantId: variant.id, quantity };
+              })
+              .filter(Boolean)
+          : [];
+      return { ...state, items: normalized };
     }
     case 'ADD': {
-      const existing = state.items.find((item) => item.id === action.id);
+      const existing = state.items.find(
+        (item) => item.id === action.id && item.variantId === action.variantId
+      );
       if (existing) {
         return {
           ...state,
           items: state.items.map((item) =>
-            item.id === action.id
+            item.id === action.id && item.variantId === action.variantId
               ? { ...item, quantity: item.quantity + 1 }
               : item
           )
@@ -26,7 +39,7 @@ function cartReducer(state, action) {
       }
       return {
         ...state,
-        items: [...state.items, { id: action.id, quantity: 1 }]
+        items: [...state.items, { id: action.id, variantId: action.variantId, quantity: 1 }]
       };
     }
     case 'UPDATE': {
@@ -34,20 +47,26 @@ function cartReducer(state, action) {
       if (quantity === 0) {
         return {
           ...state,
-          items: state.items.filter((item) => item.id !== action.id)
+          items: state.items.filter(
+            (item) => !(item.id === action.id && item.variantId === action.variantId)
+          )
         };
       }
       return {
         ...state,
         items: state.items.map((item) =>
-          item.id === action.id ? { ...item, quantity } : item
+          item.id === action.id && item.variantId === action.variantId
+            ? { ...item, quantity }
+            : item
         )
       };
     }
     case 'REMOVE': {
       return {
         ...state,
-        items: state.items.filter((item) => item.id !== action.id)
+        items: state.items.filter(
+          (item) => !(item.id === action.id && item.variantId === action.variantId)
+        )
       };
     }
     case 'CLEAR': {
@@ -93,12 +112,15 @@ export function CartProvider({ children }) {
       .map((item) => {
         const product = productsById[item.id];
         if (!product) return null;
+        const variant = getProductVariant(item.id, item.variantId);
+        if (!variant) return null;
         const quantity = Number(item.quantity) || 0;
         if (quantity <= 0) return null;
         return {
           ...product,
+          variant,
           quantity,
-          lineTotal: product.price * quantity
+          lineTotal: variant.price * quantity
         };
       })
       .filter(Boolean);
@@ -119,9 +141,14 @@ export function CartProvider({ children }) {
     tax,
     total,
     itemCount,
-    addItem: (id) => dispatch({ type: 'ADD', id }),
-    updateQuantity: (id, quantity) => dispatch({ type: 'UPDATE', id, quantity }),
-    removeItem: (id) => dispatch({ type: 'REMOVE', id }),
+    addItem: (id, variantId) => {
+      const variant = getProductVariant(id, variantId);
+      if (!variant) return;
+      dispatch({ type: 'ADD', id, variantId: variant.id });
+    },
+    updateQuantity: (id, variantId, quantity) =>
+      dispatch({ type: 'UPDATE', id, variantId, quantity }),
+    removeItem: (id, variantId) => dispatch({ type: 'REMOVE', id, variantId }),
     clearCart: () => dispatch({ type: 'CLEAR' })
   };
 

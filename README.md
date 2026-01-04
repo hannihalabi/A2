@@ -1,6 +1,6 @@
-# Sable & Stone
+# A2 Shop
 
-A four-item e-commerce demo built with Next.js and Stripe Checkout.
+A four-item e-commerce demo built with Next.js and Stripe Checkout (SEK pricing).
 
 ## Setup
 
