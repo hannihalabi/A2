@@ -12,7 +12,7 @@ export default function HomePage() {
       <SiteHeader />
       <main className="content">
         <section className="hero">
-          <div>
+          <div className="hero-content">
             <span className="pill">Utvalt sortiment av kvalitet</span>
             <h1 className="hero-title">Viktnedgång. På ett effektivare sätt</h1>
             <p className="hero-copy">
@@ -28,6 +28,16 @@ export default function HomePage() {
             </div>
           </div>
           <div className="hero-card">
+            <video
+              className="hero-video"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+            >
+              <source src="/hero-video/video-1.mp4" type="video/mp4" />
+            </video>
             <HeroImageLoop />
           </div>
         </section>

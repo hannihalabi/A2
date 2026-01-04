@@ -202,6 +202,15 @@ button {
   inset: 0;
 }
 
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+}
+
 .hero-slide {
   position: absolute;
   inset: 0;
@@ -713,6 +722,19 @@ button {
   }
 
   .hero {
+    padding: 0;
+    gap: 0;
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .hero-card {
+    min-height: 100vh;
+    height: 100vh;
+    border-radius: 0;
+  }
+
+  .hero-content {
     padding: 40px 6% 64px;
   }
 
@@ -725,6 +747,16 @@ button {
 
   .floating-cart {
     display: inline-flex;
+  }
+}
+
+@media (max-width: 860px) {
+  .hero-video {
+    display: block;
+  }
+
+  .hero-carousel {
+    display: none;
   }
 }
 
