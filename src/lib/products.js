@@ -31,8 +31,8 @@ export const products = [
     description: 'Långsiktig kur med två styrkor och differentierad längd.',
     story:
       'Välj 10 mg för 1 månad eller 20 mg för 2 månader. Levereras med tydliga instruktioner.',
-    image: '/retatrutide/reta-2.webp',
-    images: ['/retatrutide/reta-2.webp'],
+    image: '/retatrutide/Retatrutide.png',
+    images: ['/retatrutide/Retatrutide.png'],
     highlights: ['Två styrkor', 'Långsiktig plan', 'Instruktioner medföljer'],
     variants: [
       {
@@ -56,8 +56,8 @@ export const products = [
     description: 'Nässprej 30 mg för att få bättre pigment, enkel att använda.',
     story:
       'Formulerad för daglig användning med fokus på jämn applicering och enkel rutin. 30 mg per flaska.',
-    image: '/nasspray/2291124447_0340_0340.jpg',
-    images: ['/nasspray/2291124447_0340_0340.jpg'],
+    image: '/nasspray/nasspray.jpeg',
+    images: ['/nasspray/nasspray.jpeg'],
     highlights: ['30 mg', 'Smidig rutin', 'Pigmentstöd'],
     variants: [
       {
@@ -75,8 +75,8 @@ export const products = [
     description: '10 mg. Ingår vatten & insulinnålar.',
     story:
       'Ett komplett startkit med 10 mg, sterilt vatten och insulinnålar för enkel förberedelse.',
-    image: '/melanotan/Melanotan-1-10MG-600x600.jpg.webp',
-    images: ['/melanotan/Melanotan-1-10MG-600x600.jpg.webp'],
+    image: '/melanotan/Melanotan-2.jpeg',
+    images: ['/melanotan/Melanotan-2.jpeg'],
     highlights: ['10 mg', 'Vatten ingår', 'Insulinnålar ingår'],
     variants: [
       {
