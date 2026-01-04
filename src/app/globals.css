@@ -521,6 +521,34 @@ button {
   gap: 12px;
 }
 
+.cart-discount {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cart-discount label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(43, 27, 35, 0.6);
+}
+
+.discount-input {
+  display: flex;
+  gap: 10px;
+}
+
+.discount-input input {
+  flex: 1;
+  border-radius: 999px;
+  border: 1px solid rgba(43, 27, 35, 0.18);
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  background: #fff;
+  color: var(--ink);
+}
+
 .cart-empty {
   padding: 16px;
   border-radius: 16px;

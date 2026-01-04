@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useCart } from './cart-context';
@@ -10,20 +10,25 @@ export default function CartDrawer({ open, onClose }) {
   const {
     lineItems,
     subtotal,
-    tax,
+    discountCode,
+    discountAmount,
     total,
     itemCount,
     updateQuantity,
-    removeItem
+    removeItem,
+    applyDiscount
   } = useCart();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [discountInput, setDiscountInput] = useState(discountCode || '');
+  const [discountError, setDiscountError] = useState('');
 
   const empty = lineItems.length === 0;
-  const estimatedTaxLabel = useMemo(
-    () => (empty ? formatPrice(0) : formatPrice(tax)),
-    [tax, empty]
-  );
+  const discountLabel = discountCode ? `Rabatt (${discountCode})` : 'Rabatt';
+
+  useEffect(() => {
+    setDiscountInput(discountCode || '');
+  }, [discountCode]);
 
   useEffect(() => {
     if (open) {
@@ -35,6 +40,21 @@ export default function CartDrawer({ open, onClose }) {
       document.body.style.overflow = '';
     };
   }, [open]);
+
+  function handleApplyDiscount() {
+    if (!discountInput.trim()) {
+      applyDiscount('');
+      setDiscountError('');
+      return;
+    }
+
+    const ok = applyDiscount(discountInput);
+    if (!ok) {
+      setDiscountError('Ogiltig rabattkod.');
+      return;
+    }
+    setDiscountError('');
+  }
 
   async function handleCheckout() {
     setIsLoading(true);
@@ -49,7 +69,8 @@ export default function CartDrawer({ open, onClose }) {
             id: item.id,
             variantId: item.variant.id,
             quantity: item.quantity
-          }))
+          })),
+          discountCode
         })
       });
 
@@ -138,15 +159,39 @@ export default function CartDrawer({ open, onClose }) {
         </div>
 
         <div className="cart-footer">
+          <div className="cart-discount">
+            <label htmlFor="discount-code">Rabattkod</label>
+            <div className="discount-input">
+              <input
+                id="discount-code"
+                type="text"
+                placeholder="Skriv kod"
+                value={discountInput}
+                onChange={(event) => setDiscountInput(event.target.value)}
+                autoComplete="off"
+              />
+              <button
+                className="button button-ghost"
+                type="button"
+                onClick={handleApplyDiscount}
+                disabled={isLoading}
+              >
+                Aktivera
+              </button>
+            </div>
+            {discountError ? <p className="error">{discountError}</p> : null}
+          </div>
           <div className="totals">
             <div className="totals-row">
               <span>Delsumma</span>
               <span>{formatPrice(subtotal)}</span>
             </div>
-          <div className="totals-row">
-            <span>Moms (estimerad)</span>
-            <span>{estimatedTaxLabel}</span>
-          </div>
+            {discountAmount > 0 ? (
+              <div className="totals-row">
+                <span>{discountLabel}</span>
+                <span>-{formatPrice(discountAmount)}</span>
+              </div>
+            ) : null}
             <div className="totals-row totals-total">
               <span>Total</span>
               <span>{formatPrice(total)}</span>
@@ -160,7 +205,6 @@ export default function CartDrawer({ open, onClose }) {
           >
             {isLoading ? 'Tar dig vidare...' : 'Till Stripe Checkout'}
           </button>
-          <p className="muted footnote">Slutlig moms räknas i Stripe Checkout.</p>
         </div>
       </aside>
     </div>

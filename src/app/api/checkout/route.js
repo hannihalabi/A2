@@ -10,7 +10,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
 
 export async function POST(req) {
   try {
-    const { items } = await req.json();
+    const { items, discountCode } = await req.json();
 
     if (!Array.isArray(items) || items.length === 0) {
       return NextResponse.json({ error: 'Varukorgen är tom.' }, { status: 400 });
@@ -20,6 +20,9 @@ export async function POST(req) {
       /\/$/,
       ''
     );
+    const normalizedCode =
+      typeof discountCode === 'string' ? discountCode.trim().toUpperCase() : '';
+    const discountRate = normalizedCode === 'MAND25' ? 0.25 : 0;
 
     const lineItems = items
       .map((item) => {
@@ -34,6 +37,10 @@ export async function POST(req) {
         const imageUrl = product.image.startsWith('http')
           ? product.image
           : `${baseUrl}${product.image}`;
+        const unitAmount = Math.max(
+          0,
+          Math.round(variant.price * (1 - discountRate))
+        );
 
         return {
           price_data: {
@@ -42,9 +49,13 @@ export async function POST(req) {
               name: `${product.name} ${variant.label}`,
               description: `${product.description} (${variant.duration})`,
               images: [imageUrl],
-              metadata: { productId: product.id, variantId: variant.id }
+              metadata: {
+                productId: product.id,
+                variantId: variant.id,
+                discountCode: normalizedCode || 'NONE'
+              }
             },
-            unit_amount: variant.price
+            unit_amount: unitAmount
           },
           quantity
         };

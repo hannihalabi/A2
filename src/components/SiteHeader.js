@@ -13,7 +13,7 @@ export default function SiteHeader() {
     <>
       <header className="nav">
         <Link href="/" className="brand">
-          A2 Shop
+          Mandziie 🦋
         </Link>
         <div className="nav-actions">
           <button className="button button-ghost" onClick={() => setOpen(true)}>

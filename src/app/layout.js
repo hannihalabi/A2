@@ -15,7 +15,7 @@ const displayFont = Fraunces({
 });
 
 export const metadata = {
-  title: 'A2 Shop',
+  title: 'Mandziie 🦋',
   description: 'Fyra produkter med Stripe Checkout.'
 };
 

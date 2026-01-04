@@ -5,7 +5,19 @@ import { getProductVariant, productsById } from '@/lib/products';
 
 const CartContext = createContext(null);
 const STORAGE_KEY = 'a2-cart';
-const TAX_RATE = 0.25;
+const TAX_RATE = 0;
+const DISCOUNT_CODES = {
+  MAND25: 0.25
+};
+
+function normalizeDiscountCode(code) {
+  if (typeof code !== 'string') return '';
+  return code.trim().toUpperCase();
+}
+
+function getDiscountRate(code) {
+  return DISCOUNT_CODES[code] || 0;
+}
 
 function cartReducer(state, action) {
   switch (action.type) {
@@ -21,7 +33,9 @@ function cartReducer(state, action) {
               })
               .filter(Boolean)
           : [];
-      return { ...state, items: normalized };
+      const normalizedCode = normalizeDiscountCode(action.discountCode);
+      const discountCode = getDiscountRate(normalizedCode) ? normalizedCode : '';
+      return { ...state, items: normalized, discountCode };
     }
     case 'ADD': {
       const existing = state.items.find(
@@ -70,7 +84,10 @@ function cartReducer(state, action) {
       };
     }
     case 'CLEAR': {
-      return { ...state, items: [] };
+      return { ...state, items: [], discountCode: '' };
+    }
+    case 'SET_DISCOUNT': {
+      return { ...state, discountCode: action.code };
     }
     default:
       return state;
@@ -91,21 +108,24 @@ function readStoredCart() {
 }
 
 export function CartProvider({ children }) {
-  const [state, dispatch] = useReducer(cartReducer, { items: [] });
+  const [state, dispatch] = useReducer(cartReducer, { items: [], discountCode: '' });
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
     const stored = readStoredCart();
     if (stored?.items) {
-      dispatch({ type: 'INIT', items: stored.items });
+      dispatch({ type: 'INIT', items: stored.items, discountCode: stored.discountCode });
     }
     setHydrated(true);
   }, []);
 
   useEffect(() => {
     if (!hydrated) return;
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify({ items: state.items }));
-  }, [hydrated, state.items]);
+    window.localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({ items: state.items, discountCode: state.discountCode })
+    );
+  }, [hydrated, state.items, state.discountCode]);
 
   const lineItems = useMemo(() => {
     return state.items
@@ -130,14 +150,20 @@ export function CartProvider({ children }) {
     return lineItems.reduce((total, item) => total + item.lineTotal, 0);
   }, [lineItems]);
 
-  const tax = Math.round(subtotal * TAX_RATE);
-  const total = subtotal + tax;
+  const discountRate = getDiscountRate(state.discountCode);
+  const discountAmount = Math.round(subtotal * discountRate);
+  const discountedSubtotal = Math.max(0, subtotal - discountAmount);
+  const tax = Math.round(discountedSubtotal * TAX_RATE);
+  const total = discountedSubtotal + tax;
   const itemCount = state.items.reduce((sum, item) => sum + item.quantity, 0);
 
   const value = {
     items: state.items,
     lineItems,
     subtotal,
+    discountedSubtotal,
+    discountCode: state.discountCode,
+    discountAmount,
     tax,
     total,
     itemCount,
@@ -149,6 +175,17 @@ export function CartProvider({ children }) {
     updateQuantity: (id, variantId, quantity) =>
       dispatch({ type: 'UPDATE', id, variantId, quantity }),
     removeItem: (id, variantId) => dispatch({ type: 'REMOVE', id, variantId }),
+    applyDiscount: (code) => {
+      const normalized = normalizeDiscountCode(code);
+      if (!normalized) {
+        dispatch({ type: 'SET_DISCOUNT', code: '' });
+        return true;
+      }
+      const rate = getDiscountRate(normalized);
+      if (!rate) return false;
+      dispatch({ type: 'SET_DISCOUNT', code: normalized });
+      return true;
+    },
     clearCart: () => dispatch({ type: 'CLEAR' })
   };
 
