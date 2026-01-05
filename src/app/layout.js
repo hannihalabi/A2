@@ -26,7 +26,7 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en" className={`${bodyFont.variable} ${displayFont.variable}`}>
-      <body>
+      <head>
         {gaId ? (
           <>
             <Script
@@ -43,6 +43,8 @@ export default function RootLayout({ children }) {
             </Script>
           </>
         ) : null}
+      </head>
+      <body>
         <CartProvider>
           {children}
           {gaId ? <Analytics gaId={gaId} /> : null}
