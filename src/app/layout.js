@@ -3,6 +3,7 @@ import Script from 'next/script';
 import { Space_Grotesk, Fraunces } from 'next/font/google';
 import { CartProvider } from '@/components/cart-context';
 import Analytics from '@/components/Analytics';
+import { Suspense } from 'react';
 
 const bodyFont = Space_Grotesk({
   subsets: ['latin'],
@@ -47,7 +48,11 @@ export default function RootLayout({ children }) {
       <body>
         <CartProvider>
           {children}
-          {gaId ? <Analytics gaId={gaId} /> : null}
+          {gaId ? (
+            <Suspense fallback={null}>
+              <Analytics gaId={gaId} />
+            </Suspense>
+          ) : null}
         </CartProvider>
       </body>
     </html>
