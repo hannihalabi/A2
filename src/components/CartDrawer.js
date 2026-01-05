@@ -12,6 +12,7 @@ export default function CartDrawer({ open, onClose }) {
     subtotal,
     discountCode,
     discountAmount,
+    shippingAmount,
     total,
     itemCount,
     updateQuantity,
@@ -25,6 +26,7 @@ export default function CartDrawer({ open, onClose }) {
 
   const empty = lineItems.length === 0;
   const discountLabel = discountCode ? `Rabatt (${discountCode})` : 'Rabatt';
+  const shippingLabel = 'Frakt (spårbart)';
 
   useEffect(() => {
     setDiscountInput(discountCode || '');
@@ -48,9 +50,11 @@ export default function CartDrawer({ open, onClose }) {
       return;
     }
 
-    const ok = applyDiscount(discountInput);
-    if (!ok) {
-      setDiscountError('Ogiltig rabattkod.');
+    const result = applyDiscount(discountInput);
+    if (!result.ok) {
+      setDiscountError(
+        result.reason === 'expired' ? 'Rabattkoden har gått ut.' : 'Ogiltig rabattkod.'
+      );
       return;
     }
     setDiscountError('');
@@ -190,6 +194,12 @@ export default function CartDrawer({ open, onClose }) {
               <div className="totals-row">
                 <span>{discountLabel}</span>
                 <span>-{formatPrice(discountAmount)}</span>
+              </div>
+            ) : null}
+            {shippingAmount > 0 ? (
+              <div className="totals-row">
+                <span>{shippingLabel}</span>
+                <span>{formatPrice(shippingAmount)}</span>
               </div>
             ) : null}
             <div className="totals-row totals-total">

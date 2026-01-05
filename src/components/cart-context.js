@@ -6,6 +6,8 @@ import { getProductVariant, productsById } from '@/lib/products';
 const CartContext = createContext(null);
 const STORAGE_KEY = 'a2-cart';
 const TAX_RATE = 0;
+const DISCOUNT_END_DATE = '2026-01-05';
+const DISCOUNT_END_HOUR = 18;
 const DISCOUNT_CODES = {
   MAND25: 0.25
 };
@@ -17,6 +19,36 @@ function normalizeDiscountCode(code) {
 
 function getDiscountRate(code) {
   return DISCOUNT_CODES[code] || 0;
+}
+
+function getStockholmNow() {
+  const formatter = new Intl.DateTimeFormat('sv-SE', {
+    timeZone: 'Europe/Stockholm',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false
+  });
+  const parts = formatter.formatToParts(new Date());
+  const values = parts.reduce((acc, part) => {
+    acc[part.type] = part.value;
+    return acc;
+  }, {});
+  return {
+    date: `${values.year}-${values.month}-${values.day}`,
+    hour: Number(values.hour),
+    minute: Number(values.minute)
+  };
+}
+
+function isDiscountActive(code) {
+  if (!getDiscountRate(code)) return false;
+  const { date, hour, minute } = getStockholmNow();
+  if (date < DISCOUNT_END_DATE) return true;
+  if (date > DISCOUNT_END_DATE) return false;
+  return hour < DISCOUNT_END_HOUR;
 }
 
 function cartReducer(state, action) {
@@ -34,7 +66,7 @@ function cartReducer(state, action) {
               .filter(Boolean)
           : [];
       const normalizedCode = normalizeDiscountCode(action.discountCode);
-      const discountCode = getDiscountRate(normalizedCode) ? normalizedCode : '';
+      const discountCode = isDiscountActive(normalizedCode) ? normalizedCode : '';
       return { ...state, items: normalized, discountCode };
     }
     case 'ADD': {
@@ -150,20 +182,23 @@ export function CartProvider({ children }) {
     return lineItems.reduce((total, item) => total + item.lineTotal, 0);
   }, [lineItems]);
 
-  const discountRate = getDiscountRate(state.discountCode);
+  const activeDiscountCode = isDiscountActive(state.discountCode) ? state.discountCode : '';
+  const discountRate = getDiscountRate(activeDiscountCode);
   const discountAmount = Math.round(subtotal * discountRate);
   const discountedSubtotal = Math.max(0, subtotal - discountAmount);
   const tax = Math.round(discountedSubtotal * TAX_RATE);
-  const total = discountedSubtotal + tax;
   const itemCount = state.items.reduce((sum, item) => sum + item.quantity, 0);
+  const shippingAmount = itemCount === 0 ? 0 : itemCount > 2 ? 24000 : 12000;
+  const total = discountedSubtotal + tax + shippingAmount;
 
   const value = {
     items: state.items,
     lineItems,
     subtotal,
     discountedSubtotal,
-    discountCode: state.discountCode,
+    discountCode: activeDiscountCode,
     discountAmount,
+    shippingAmount,
     tax,
     total,
     itemCount,
@@ -179,12 +214,16 @@ export function CartProvider({ children }) {
       const normalized = normalizeDiscountCode(code);
       if (!normalized) {
         dispatch({ type: 'SET_DISCOUNT', code: '' });
-        return true;
+        return { ok: true };
       }
       const rate = getDiscountRate(normalized);
-      if (!rate) return false;
+      if (!rate) return { ok: false, reason: 'invalid' };
+      if (!isDiscountActive(normalized)) {
+        dispatch({ type: 'SET_DISCOUNT', code: '' });
+        return { ok: false, reason: 'expired' };
+      }
       dispatch({ type: 'SET_DISCOUNT', code: normalized });
-      return true;
+      return { ok: true };
     },
     clearCart: () => dispatch({ type: 'CLEAR' })
   };

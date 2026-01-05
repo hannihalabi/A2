@@ -2,7 +2,6 @@ import Link from 'next/link';
 import { products } from '@/lib/products';
 import ProductCard from '@/components/ProductCard';
 import SiteHeader from '@/components/SiteHeader';
-import HeroImageLoop from '@/components/HeroImageLoop';
 
 export default function HomePage() {
   const heroProduct = products[0];
@@ -16,7 +15,7 @@ export default function HomePage() {
             <span className="pill">Utvalt sortiment av kvalitet</span>
             <h1 className="hero-title">Viktnedgång. På ett effektivare sätt</h1>
             <p className="hero-copy">
-              A2 Shop samlar ett koncentrerat urval med tydliga styrkor och snabb checkout.
+              Denna webshop samlar ett koncentrerat urval med tydliga styrkor och snabb checkout.
             </p>
             <div className="hero-actions">
               <a className="button button-primary" href="#collection">
@@ -26,19 +25,6 @@ export default function HomePage() {
                 Utforska produkten
               </Link>
             </div>
-          </div>
-          <div className="hero-card">
-            <video
-              className="hero-video"
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="auto"
-            >
-              <source src="/hero-video/video-1.mp4" type="video/mp4" />
-            </video>
-            <HeroImageLoop />
           </div>
         </section>
 
