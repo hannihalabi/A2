@@ -325,6 +325,30 @@ button {
   font-size: 1.1rem;
 }
 
+.price-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.price-compare {
+  font-size: 0.85rem;
+  color: rgba(43, 27, 35, 0.55);
+  text-decoration: line-through;
+}
+
+.price-savings {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--olive);
+}
+
 .button {
   border: none;
   border-radius: 999px;
@@ -619,6 +643,12 @@ button {
 }
 
 .variant-price {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.variant-price-current {
   font-weight: 600;
 }
 

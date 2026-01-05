@@ -16,6 +16,14 @@ export default function ProductDetail({ product }) {
     return variants.find((variant) => variant.id === selectedId) || variants[0];
   }, [variants, selectedId]);
 
+  const getSavings = (variant) => {
+    if (!variant?.compareAtPrice) return null;
+    const savings = variant.compareAtPrice - variant.price;
+    return savings > 0 ? savings : null;
+  };
+
+  const selectedSavings = getSavings(selectedVariant);
+
   useEffect(() => {
     setActiveImage(gallery[0]);
   }, [product.id, gallery]);
@@ -41,23 +49,40 @@ export default function ProductDetail({ product }) {
 
         {variants.length > 1 ? (
           <div className="variant-grid">
-            {variants.map((variant) => (
-              <label
-                key={variant.id}
-                className={`variant-option ${selectedId === variant.id ? 'selected' : ''}`}
-              >
-                <input
-                  type="radio"
-                  name="variant"
-                  value={variant.id}
-                  checked={selectedId === variant.id}
-                  onChange={() => setSelectedId(variant.id)}
-                />
-                <div className="variant-title">{variant.label}</div>
-                <div className="variant-meta">{variant.duration}</div>
-                <div className="variant-price">{formatPrice(variant.price)}</div>
-              </label>
-            ))}
+            {variants.map((variant) => {
+              const variantSavings = getSavings(variant);
+              return (
+                <label
+                  key={variant.id}
+                  className={`variant-option ${selectedId === variant.id ? 'selected' : ''}`}
+                >
+                  <input
+                    type="radio"
+                    name="variant"
+                    value={variant.id}
+                    checked={selectedId === variant.id}
+                    onChange={() => setSelectedId(variant.id)}
+                  />
+                  <div className="variant-title">{variant.label}</div>
+                  <div className="variant-meta">{variant.duration}</div>
+                  <div className="variant-price">
+                    <span className="variant-price-current">
+                      {formatPrice(variant.price)}
+                    </span>
+                    {variantSavings ? (
+                      <>
+                        <span className="price-compare">
+                          Ord. {formatPrice(variant.compareAtPrice)}
+                        </span>
+                        <span className="price-savings">
+                          Rabatt -{formatPrice(variantSavings)}
+                        </span>
+                      </>
+                    ) : null}
+                  </div>
+                </label>
+              );
+            })}
           </div>
         ) : (
           <div className="detail-highlight">
@@ -66,7 +91,21 @@ export default function ProductDetail({ product }) {
         )}
 
         <div className="card-meta">
-          <span className="price">{formatPrice(selectedVariant.price)}</span>
+          <div className="price-stack">
+            <div className="price-row">
+              <span className="price">{formatPrice(selectedVariant.price)}</span>
+              {selectedSavings ? (
+                <span className="price-compare">
+                  {formatPrice(selectedVariant.compareAtPrice)}
+                </span>
+              ) : null}
+            </div>
+            {selectedSavings ? (
+              <>
+                <span className="price-savings">Rabatt -{formatPrice(selectedSavings)}</span>
+              </>
+            ) : null}
+          </div>
           <AddToCartButton productId={product.id} variantId={selectedVariant.id} />
         </div>
         <div className="detail-highlights">

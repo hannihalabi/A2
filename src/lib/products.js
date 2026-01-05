@@ -20,7 +20,8 @@ export const products = [
         id: '20mg',
         label: '20 mg',
         duration: '2 månader',
-        price: 520000
+        price: 520000,
+        compareAtPrice: 600000
       }
     ]
   },
