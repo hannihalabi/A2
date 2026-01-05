@@ -7,9 +7,10 @@ const CartContext = createContext(null);
 const STORAGE_KEY = 'a2-cart';
 const TAX_RATE = 0;
 const DISCOUNT_END_DATE = '2026-01-05';
-const DISCOUNT_END_HOUR = 18;
+const DISCOUNT_END_HOUR = 19;
 const DISCOUNT_CODES = {
-  MAND25: 0.25
+  MAND25: 0.25,
+  MAND20: 0.2
 };
 
 function normalizeDiscountCode(code) {

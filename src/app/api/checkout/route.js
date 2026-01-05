@@ -9,7 +9,11 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
 });
 
 const DISCOUNT_END_DATE = '2026-01-05';
-const DISCOUNT_END_HOUR = 18;
+const DISCOUNT_END_HOUR = 19;
+const DISCOUNT_RATES = {
+  MAND25: 0.25,
+  MAND20: 0.2
+};
 
 function getStockholmNow() {
   const formatter = new Intl.DateTimeFormat('sv-SE', {
@@ -33,11 +37,15 @@ function getStockholmNow() {
 }
 
 function isDiscountActive(code) {
-  if (code !== 'MAND25') return false;
+  if (!DISCOUNT_RATES[code]) return false;
   const { date, hour } = getStockholmNow();
   if (date < DISCOUNT_END_DATE) return true;
   if (date > DISCOUNT_END_DATE) return false;
   return hour < DISCOUNT_END_HOUR;
+}
+
+function getDiscountRate(code) {
+  return DISCOUNT_RATES[code] || 0;
 }
 
 export async function POST(req) {
@@ -54,7 +62,9 @@ export async function POST(req) {
     );
     const normalizedCode =
       typeof discountCode === 'string' ? discountCode.trim().toUpperCase() : '';
-    const discountRate = isDiscountActive(normalizedCode) ? 0.25 : 0;
+    const discountRate = isDiscountActive(normalizedCode)
+      ? getDiscountRate(normalizedCode)
+      : 0;
     const activeCode = discountRate ? normalizedCode : '';
 
     const lineItems = items
