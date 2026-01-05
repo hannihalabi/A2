@@ -106,11 +106,6 @@ export async function POST(req) {
       mode: 'payment',
       line_items: lineItems,
       customer_creation: 'always',
-      customer_update: {
-        address: 'auto',
-        name: 'auto',
-        shipping: 'auto'
-      },
       billing_address_collection: 'required',
       shipping_address_collection: {
         allowed_countries: ['SE']
