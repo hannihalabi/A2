@@ -32,6 +32,31 @@ export async function POST(req) {
 
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object;
+    const customerId =
+      typeof session.customer === 'string' ? session.customer : session.customer?.id;
+    const details = session.customer_details;
+    const updateData = {};
+
+    if (details?.name) {
+      updateData.name = details.name;
+    }
+    if (details?.phone) {
+      updateData.phone = details.phone;
+    }
+    if (details?.address) {
+      updateData.address = details.address;
+    }
+    if (session.shipping_details) {
+      updateData.shipping = session.shipping_details;
+    }
+
+    if (customerId && Object.keys(updateData).length > 0) {
+      try {
+        await stripe.customers.update(customerId, updateData);
+      } catch (error) {
+        console.error('Customer update failed:', error.message);
+      }
+    }
     console.log('Payment received:', session.id);
   }
 
