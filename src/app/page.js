@@ -13,9 +13,9 @@ export default function HomePage() {
         <section className="hero">
           <div className="hero-content">
             <span className="pill">Utvalt sortiment av kvalitet</span>
-            <h1 className="hero-title">Viktnedgång. På ett effektivare sätt</h1>
+            <h1 className="hero-title">Viktnedgång- effektivare och enklare!</h1>
             <p className="hero-copy">
-              Denna webshop samlar ett koncentrerat urval med tydliga styrkor och snabb checkout.
+              Den här webbshopen har samlat ett koncentrat av utvalda produkter med tydliga styrkor. Enkel och snabb checkout.
             </p>
             <div className="hero-actions">
               <a className="button button-primary" href="#collection">
