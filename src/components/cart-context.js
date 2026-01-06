@@ -6,10 +6,7 @@ import { getProductVariant, productsById } from '@/lib/products';
 const CartContext = createContext(null);
 const STORAGE_KEY = 'a2-cart';
 const TAX_RATE = 0;
-const DISCOUNT_END_DATE = '2026-01-05';
-const DISCOUNT_END_HOUR = 19;
 const DISCOUNT_CODES = {
-  MAND25: 0.25,
   MAND20: 0.2
 };
 
@@ -22,34 +19,9 @@ function getDiscountRate(code) {
   return DISCOUNT_CODES[code] || 0;
 }
 
-function getStockholmNow() {
-  const formatter = new Intl.DateTimeFormat('sv-SE', {
-    timeZone: 'Europe/Stockholm',
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false
-  });
-  const parts = formatter.formatToParts(new Date());
-  const values = parts.reduce((acc, part) => {
-    acc[part.type] = part.value;
-    return acc;
-  }, {});
-  return {
-    date: `${values.year}-${values.month}-${values.day}`,
-    hour: Number(values.hour),
-    minute: Number(values.minute)
-  };
-}
-
 function isDiscountActive(code) {
   if (!getDiscountRate(code)) return false;
-  const { date, hour, minute } = getStockholmNow();
-  if (date < DISCOUNT_END_DATE) return true;
-  if (date > DISCOUNT_END_DATE) return false;
-  return hour < DISCOUNT_END_HOUR;
+  return true;
 }
 
 function cartReducer(state, action) {

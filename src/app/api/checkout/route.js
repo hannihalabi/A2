@@ -8,40 +8,13 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: '2023-10-16'
 });
 
-const DISCOUNT_END_DATE = '2026-01-05';
-const DISCOUNT_END_HOUR = 19;
 const DISCOUNT_RATES = {
-  MAND25: 0.25,
   MAND20: 0.2
 };
 
-function getStockholmNow() {
-  const formatter = new Intl.DateTimeFormat('sv-SE', {
-    timeZone: 'Europe/Stockholm',
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false
-  });
-  const parts = formatter.formatToParts(new Date());
-  const values = parts.reduce((acc, part) => {
-    acc[part.type] = part.value;
-    return acc;
-  }, {});
-  return {
-    date: `${values.year}-${values.month}-${values.day}`,
-    hour: Number(values.hour)
-  };
-}
-
 function isDiscountActive(code) {
   if (!DISCOUNT_RATES[code]) return false;
-  const { date, hour } = getStockholmNow();
-  if (date < DISCOUNT_END_DATE) return true;
-  if (date > DISCOUNT_END_DATE) return false;
-  return hour < DISCOUNT_END_HOUR;
+  return true;
 }
 
 function getDiscountRate(code) {
