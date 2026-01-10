@@ -12,8 +12,8 @@ export default function SiteHeader() {
   return (
     <>
       <header className="nav">
-        <Link href="/" className="brand">
-          Mandziie 🦋
+        <Link href="/" className="brand" aria-label="Hem">
+          🦋
         </Link>
         <div className="nav-actions">
           <button className="button button-ghost" onClick={() => setOpen(true)}>

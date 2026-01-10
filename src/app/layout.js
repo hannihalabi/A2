@@ -18,7 +18,6 @@ const displayFont = Fraunces({
 });
 
 export const metadata = {
-  title: 'Mandziie 🦋',
   description: 'Produkter med Stripe Checkout.'
 };
 
