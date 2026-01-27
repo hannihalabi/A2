@@ -254,6 +254,27 @@ button {
   color: rgba(43, 27, 35, 0.6);
 }
 
+.card-promo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: rgba(196, 90, 138, 0.12);
+  color: var(--ink);
+}
+
+.card-promo-title {
+  font-family: var(--font-display), 'Fraunces', serif;
+  font-size: 1.1rem;
+  line-height: 1.2;
+}
+
+.card-promo-copy {
+  font-size: 0.9rem;
+  color: rgba(43, 27, 35, 0.75);
+}
+
 .card-title {
   font-size: 1.2rem;
   font-weight: 600;

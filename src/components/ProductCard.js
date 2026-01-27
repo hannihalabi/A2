@@ -27,6 +27,12 @@ export default function ProductCard({ product }) {
         />
       </Link>
       <div className="card-body">
+        {product.promoTitle ? (
+          <div className="card-promo">
+            <h4 className="card-promo-title">{product.promoTitle}</h4>
+            <p className="card-promo-copy">{product.promoCopy}</p>
+          </div>
+        ) : null}
         <div className="card-kicker">{product.tagline}</div>
         <h3 className="card-title">
           <Link href={`/products/${product.id}`}>{product.name}</Link>

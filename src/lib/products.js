@@ -87,6 +87,41 @@ export const products = [
         price: 65000
       }
     ]
+  },
+  {
+    id: 'storpack-100',
+    name: 'Storpack 100-pack',
+    tagline: 'För dig som vill köpa stort',
+    promoTitle: 'Vill du bli din egen chef? Säkra storpack värde 65 000-300 000 kr',
+    promoCopy:
+      'Välj mellan enstaka produkter eller ett storpack med 100-pack och Bac vatten. Leverans 14 dagar.',
+    description:
+      'Välj mellan Trizepatid, Retatrutide eller Melanotan 2. 100-pack med Bac vatten ingår.',
+    story:
+      'Storpack för dig som vill köpa större volym. Alla alternativ är 10 mg per enhet och levereras med Bac vatten för enkel hantering.',
+    image: '/images/viktned-1.jpg',
+    images: ['/images/viktned-1.jpg'],
+    highlights: ['100-pack', 'Bac vatten ingår', '10 mg per enhet'],
+    variants: [
+      {
+        id: 'trizepatid-10mg',
+        label: 'Trizepatid 10 mg',
+        duration: '100-pack + Bac vatten',
+        price: 3200000
+      },
+      {
+        id: 'retatrutide-10mg',
+        label: 'Retatrutide 10 mg',
+        duration: '100-pack + Bac vatten',
+        price: 3800000
+      },
+      {
+        id: 'melanotan-10mg',
+        label: 'Melanotan 10 mg',
+        duration: '100-pack + Bac vatten',
+        price: 3000000
+      }
+    ]
   }
 ];
 
