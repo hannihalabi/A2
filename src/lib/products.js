@@ -99,8 +99,8 @@ export const products = [
       'Välj mellan Trizepatid, Retatrutide eller Melanotan 2. 100-pack med Bac vatten ingår.',
     story:
       'Storpack för dig som vill köpa större volym. Alla alternativ är 10 mg per enhet och levereras med Bac vatten för enkel hantering.',
-    image: '/images/viktned-1.jpg',
-    images: ['/images/viktned-1.jpg'],
+    image: '/images/Viktned-1.jpg',
+    images: ['/images/Viktned-1.jpg'],
     highlights: ['100-pack', 'Bac vatten ingår', '10 mg per enhet'],
     variants: [
       {
