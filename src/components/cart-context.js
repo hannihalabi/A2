@@ -7,7 +7,8 @@ const CartContext = createContext(null);
 const STORAGE_KEY = 'a2-cart';
 const TAX_RATE = 0;
 const DISCOUNT_CODES = {
-  MAND20: 0.2
+  MAND20: 0.2,
+  FETT25: 0.25
 };
 
 function normalizeDiscountCode(code) {

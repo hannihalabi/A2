@@ -9,7 +9,8 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
 });
 
 const DISCOUNT_RATES = {
-  MAND20: 0.2
+  MAND20: 0.2,
+  FETT25: 0.25
 };
 
 function isDiscountActive(code) {
