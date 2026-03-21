@@ -62,6 +62,23 @@ export const products = [
         price: 65000
       }
     ]
+  },
+  {
+    id: 'brun-spray',
+    name: 'Brun spray',
+    tagline: 'Spraytan',
+    description: 'Snabb spraybehandling för en jämn och solkysst ton.',
+    story:
+      'En smidig behandling för dig som vill ha färg direkt med ett jämnt resultat. Passar inför event, resa eller när du bara vill ha en varmare ton.',
+    highlights: ['Snabb behandling', 'Jämn ton', 'Enkel bokning'],
+    variants: [
+      {
+        id: 'standard',
+        label: 'Brun spray',
+        duration: '1 behandling',
+        price: 80000
+      }
+    ]
   }
 ];
 
