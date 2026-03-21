@@ -1,125 +1,65 @@
 export const products = [
   {
-    id: 'trizapetide',
-    name: 'Trizapetide',
-    tagline: 'Välj styrka',
-    description: 'Flexibel behandling för viktnedgång med två styrkor och olika längd.',
+    id: 'life-coaching',
+    name: 'Life coaching',
+    tagline: 'Välj paket',
+    description: 'Personlig coaching med tydlig struktur, uppföljning och konkreta delmål.',
     story:
-      'Välj 10 mg för 1 månad eller 20 mg för 2 månader. Diskret leverans och tydlig dosering.',
-    image: '/tirzepetide/tirze-1.png',
-    images: ['/tirzepetide/tirze-1.png'],
-    highlights: ['Två styrkor', 'Tydlig dosering', 'Diskret leverans'],
+      'Välj mellan ett kortare paket med 10 sessioner eller ett längre paket med 20 sessioner. Fokus ligger på vardagsstruktur, motivation och hållbar utveckling.',
+    highlights: ['Personlig coach', 'Tydlig plan', 'Löpande uppföljning'],
     variants: [
       {
-        id: '10mg',
-        label: '10 mg',
-        duration: '1 månad',
+        id: '10',
+        label: 'Life coaching 10',
+        duration: '10 sessioner',
         price: 300000
       },
       {
-        id: '20mg',
-        label: '20 mg',
-        duration: '2 månader',
+        id: '20',
+        label: 'Life coaching 20',
+        duration: '20 sessioner',
         price: 520000,
         compareAtPrice: 600000
       }
     ]
   },
   {
-    id: 'retatrutide',
-    name: 'Retatrutide',
-    tagline: 'Välj styrka',
-    description: 'Långsiktig kur med två styrkor och differentierad längd.',
+    id: 'dietplan',
+    name: 'Dietplan',
+    tagline: 'Välj upplägg',
+    description: 'Strukturerat kostupplägg med praktiska rekommendationer och tydliga rutiner.',
     story:
-      'Välj 10 mg för 1 månad eller 20 mg för 2 månader. Levereras med tydliga instruktioner.',
-    image: '/retatrutide/Retatrutide.png',
-    images: ['/retatrutide/Retatrutide.png'],
-    highlights: ['Två styrkor', 'Långsiktig plan', 'Instruktioner medföljer'],
+      'Välj mellan ett upplägg för 10 dagar eller 20 dagar. Du får ett genomtänkt schema, tydliga riktlinjer och stöd för att hålla planen.',
+    highlights: ['Tydligt upplägg', 'Praktiska råd', 'Enkel att följa'],
     variants: [
       {
-        id: '10mg',
-        label: '10 mg',
-        duration: '1 månad',
+        id: '10',
+        label: 'Dietplan 10',
+        duration: '10 dagar',
         price: 350000
       },
       {
-        id: '20mg',
-        label: '20 mg',
-        duration: '2 månader',
+        id: '20',
+        label: 'Dietplan 20',
+        duration: '20 dagar',
         price: 550000
       }
     ]
   },
   {
-    id: 'nassprej',
-    name: 'Nässprej',
-    tagline: 'Pigmentstöd',
-    description: 'Nässprej 30 mg för att få bättre pigment, enkel att använda.',
+    id: 'brunare-hud',
+    name: 'Brunare hud',
+    tagline: 'Skönhetsbehandling',
+    description: 'Kosmetisk behandling med fokus på jämn ton och ett naturligt resultat.',
     story:
-      'Formulerad för daglig användning med fokus på jämn applicering och enkel rutin. 30 mg per flaska.',
-    image: '/nasspray/nasspray.jpeg',
-    images: ['/nasspray/nasspray.jpeg'],
-    highlights: ['30 mg', 'Smidig rutin', 'Pigmentstöd'],
+      'En enkel behandling för dig som vill ha en varmare hudton inför vardag, resa eller event. Upplägget är gjort för att vara smidigt och lätt att boka.',
+    highlights: ['Jämn finish', 'Naturlig ton', 'Snabb bokning'],
     variants: [
       {
-        id: '30mg',
-        label: '30 mg',
-        duration: '1 flaska',
-        price: 80000
-      }
-    ]
-  },
-  {
-    id: 'melanotan-2',
-    name: 'Melanotan 2',
-    tagline: 'Komplett kit',
-    description: '10 mg. Ingår vatten & insulinnålar.',
-    story:
-      'Ett komplett startkit med 10 mg, sterilt vatten och insulinnålar för enkel förberedelse.',
-    image: '/melanotan/Melanotan-2.jpeg',
-    images: ['/melanotan/Melanotan-2.jpeg'],
-    highlights: ['10 mg', 'Vatten ingår', 'Insulinnålar ingår'],
-    variants: [
-      {
-        id: '10mg',
-        label: '10 mg',
-        duration: 'Komplett kit',
+        id: 'standard',
+        label: 'Brunare hud',
+        duration: '1 behandling',
         price: 65000
-      }
-    ]
-  },
-  {
-    id: 'storpack-100',
-    name: 'Storpack 100-pack',
-    tagline: 'För dig som vill köpa stort',
-    promoTitle: 'Vill du bli din egen chef? Säkra storpack värde 65 000-300 000 kr',
-    promoCopy:
-      'Välj mellan enstaka produkter eller ett storpack med 100-pack och Bac vatten. Leverans 14 dagar.',
-    description:
-      'Välj mellan Trizepatid, Retatrutide eller Melanotan 2. 100-pack med Bac vatten ingår.',
-    story:
-      'Storpack för dig som vill köpa större volym. Alla alternativ är 10 mg per enhet och levereras med Bac vatten för enkel hantering.',
-    image: '/images/Viktned-1.jpg',
-    images: ['/images/Viktned-1.jpg'],
-    highlights: ['100-pack', 'Bac vatten ingår', '10 mg per enhet'],
-    variants: [
-      {
-        id: 'trizepatid-10mg',
-        label: 'Trizepatid 10 mg',
-        duration: '100-pack + Bac vatten',
-        price: 3200000
-      },
-      {
-        id: 'retatrutide-10mg',
-        label: 'Retatrutide 10 mg',
-        duration: '100-pack + Bac vatten',
-        price: 3800000
-      },
-      {
-        id: 'melanotan-10mg',
-        label: 'Melanotan 10 mg',
-        duration: '100-pack + Bac vatten',
-        price: 3000000
       }
     ]
   }

@@ -8,10 +8,10 @@ export default function CancelPage() {
       <main className="content status-page">
         <h1>Köpet avbröts</h1>
         <p className="hero-copy">
-          Ingen betalning genomfördes. Din varukorg finns kvar när du är redo.
+          Ingen betalning genomfördes. Din varukorg finns kvar när du är redo att boka.
         </p>
         <Link className="button button-primary" href="/">
-          Tillbaka till varukorgen
+          Tillbaka till tjänsterna
         </Link>
       </main>
     </div>

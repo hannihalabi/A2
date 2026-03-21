@@ -12,17 +12,17 @@ export default function HomePage() {
       <main className="content">
         <section className="hero">
           <div className="hero-content">
-            <span className="pill">Utvalt sortiment av kvalitet</span>
-            <h1 className="hero-title">Viktnedgång - effektivare och enklare!</h1>
+            <span className="pill">Utvalda tjänster</span>
+            <h1 className="hero-title">Tjänster för vardag, hälsa och välmående</h1>
             <p className="hero-copy">
-              Den här webbshopen har samlat ett koncentrat av utvalda produkter med tydliga styrkor. Enkel och snabb checkout.
+              Här hittar du coaching, kostupplägg och skönhetsbehandlingar i tydliga paket. Enkel och snabb checkout.
             </p>
             <div className="hero-actions">
               <a className="button button-primary" href="#collection">
-                Se sortimentet
+                Se tjänsterna
               </a>
               <Link className="button button-ghost" href={`/products/${heroProduct.id}`}>
-                Utforska produkten
+                Utforska tjänsten
               </Link>
             </div>
           </div>
@@ -30,9 +30,9 @@ export default function HomePage() {
 
         <section id="collection" className="section">
           <div className="section-head">
-            <h2>Köp dina produkter idag. Snabb leverans</h2>
+            <h2>Boka rätt tjänst för dig</h2>
             <p>
-              Välj en produkt eller kombinera flera. Allt är redo för snabb checkout.
+              Välj ett paket eller kombinera flera tjänster. Allt är redo för snabb checkout.
             </p>
           </div>
           <div className="grid">
@@ -43,7 +43,7 @@ export default function HomePage() {
         </section>
       </main>
       <footer className="footer">
-        Säker betalning via Stripe Checkout. Leveransinformation visas i kassan.
+        Säker betalning via Stripe Checkout. Bokningsinformation visas i kassan.
       </footer>
     </div>
   );

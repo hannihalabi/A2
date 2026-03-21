@@ -30,10 +30,7 @@ export async function POST(req) {
       return NextResponse.json({ error: 'Varukorgen är tom.' }, { status: 400 });
     }
 
-    const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000').replace(
-      /\/$/,
-      ''
-    );
+    const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000').replace(/\/$/, '');
     const normalizedCode =
       typeof discountCode === 'string' ? discountCode.trim().toUpperCase() : '';
     const discountRate = isDiscountActive(normalizedCode)
@@ -51,9 +48,6 @@ export async function POST(req) {
           return null;
         }
 
-        const imageUrl = product.image.startsWith('http')
-          ? product.image
-          : `${baseUrl}${product.image}`;
         const unitAmount = Math.max(
           0,
           Math.round(variant.price * (1 - discountRate))
@@ -63,9 +57,8 @@ export async function POST(req) {
           price_data: {
             currency: 'sek',
             product_data: {
-              name: `${product.name} ${variant.label}`,
+              name: variant.label,
               description: `${product.description} (${variant.duration})`,
-              images: [imageUrl],
               metadata: {
                 productId: product.id,
                 variantId: variant.id,
@@ -80,7 +73,7 @@ export async function POST(req) {
       .filter(Boolean);
 
     if (lineItems.length === 0) {
-      return NextResponse.json({ error: 'Inga giltiga produkter hittades.' }, { status: 400 });
+      return NextResponse.json({ error: 'Inga giltiga tjänster hittades.' }, { status: 400 });
     }
 
     const itemCount = lineItems.reduce((sum, item) => sum + item.quantity, 0);

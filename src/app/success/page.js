@@ -18,10 +18,10 @@ export default function SuccessPage() {
       <main className="content status-page">
         <h1>Betalningen lyckades</h1>
         <p className="hero-copy">
-          Tack för din beställning. En bekräftelse skickas med leveransinformation.
+          Tack för din beställning. En bekräftelse skickas med information om din bokning.
         </p>
         <Link className="button button-primary" href="/">
-          Tillbaka till sortimentet
+          Tillbaka till tjänsterna
         </Link>
       </main>
     </div>

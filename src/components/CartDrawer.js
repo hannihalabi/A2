@@ -1,8 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
 import { useCart } from './cart-context';
 import { formatPrice } from '@/lib/format';
 
@@ -103,7 +101,7 @@ export default function CartDrawer({ open, onClose }) {
           <div>
             <p className="cart-title">Din varukorg</p>
             <p className="cart-subtitle">
-              {itemCount} produkt{itemCount === 1 ? '' : 'er'}
+              {itemCount} tjänst{itemCount === 1 ? '' : 'er'}
             </p>
           </div>
           <button className="button button-ghost" onClick={onClose}>
@@ -115,14 +113,11 @@ export default function CartDrawer({ open, onClose }) {
           {empty ? (
             <div className="cart-empty">
               <p>Varukorgen är tom.</p>
-              <p className="muted">Välj en produkt för att komma igång.</p>
+              <p className="muted">Välj en tjänst för att komma igång.</p>
             </div>
           ) : (
             lineItems.map((item) => (
               <div className="cart-item" key={item.id}>
-                <Link href={`/products/${item.id}`} className="cart-item-image">
-                  <Image src={item.image} alt={item.name} fill sizes="96px" />
-                </Link>
                 <div className="cart-item-info">
                   <div>
                     <p className="cart-item-name">{item.name}</p>

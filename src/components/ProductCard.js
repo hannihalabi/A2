@@ -1,7 +1,6 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { formatPrice } from '@/lib/format';
 import AddToCartButton from './AddToCartButton';
@@ -18,14 +17,6 @@ export default function ProductCard({ product }) {
 
   return (
     <div className="card">
-      <Link href={`/products/${product.id}`} className="card-image">
-        <Image
-          src={product.image}
-          alt={product.name}
-          fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        />
-      </Link>
       <div className="card-body">
         {product.promoTitle ? (
           <div className="card-promo">

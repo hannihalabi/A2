@@ -222,22 +222,9 @@ button {
 .card {
   background: #fff;
   border-radius: var(--radius);
-  overflow: hidden;
   box-shadow: var(--shadow);
   display: flex;
   flex-direction: column;
-}
-
-.card-image {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  overflow: hidden;
-}
-
-.card-image img {
-  object-fit: contain;
-  background: #fff;
 }
 
 .card-body {
@@ -477,22 +464,7 @@ button {
 }
 
 .cart-item {
-  display: grid;
-  grid-template-columns: 96px 1fr;
-  gap: 16px;
-  align-items: center;
-}
-
-.cart-item-image {
-  position: relative;
-  width: 96px;
-  height: 96px;
-  border-radius: 16px;
-  overflow: hidden;
-}
-
-.cart-item-image img {
-  object-fit: cover;
+  display: block;
 }
 
 .cart-item-info {
@@ -595,22 +567,7 @@ button {
 
 .detail {
   padding: 40px 8% 96px;
-  display: grid;
-  gap: 36px;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-}
-
-.detail-image {
-  position: relative;
-  min-height: 420px;
-  border-radius: var(--radius);
-  overflow: hidden;
-  box-shadow: var(--shadow);
-}
-
-.detail-image img {
-  object-fit: contain;
-  background: #fff;
+  display: block;
 }
 
 .detail-copy h1 {
@@ -678,34 +635,6 @@ button {
   margin-top: 24px;
   display: grid;
   gap: 12px;
-}
-
-.detail-gallery {
-  margin-top: 18px;
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.detail-thumb {
-  position: relative;
-  width: 72px;
-  height: 72px;
-  border-radius: 14px;
-  border: 1px solid rgba(43, 27, 35, 0.18);
-  overflow: hidden;
-  background: #fff;
-  cursor: pointer;
-  padding: 0;
-}
-
-.detail-thumb.active {
-  border-color: var(--olive);
-  box-shadow: 0 10px 20px rgba(53, 68, 59, 0.16);
-}
-
-.detail-thumb img {
-  object-fit: cover;
 }
 
 .detail-highlight {

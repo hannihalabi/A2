@@ -18,7 +18,7 @@ const displayFont = Fraunces({
 });
 
 export const metadata = {
-  description: 'Produkter med Stripe Checkout.'
+  description: 'Tjänster med Stripe Checkout.'
 };
 
 export default function RootLayout({ children }) {
